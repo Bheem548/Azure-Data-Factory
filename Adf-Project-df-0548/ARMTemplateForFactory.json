@@ -96,6 +96,35 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "WebActivity to send email",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy csv to parquet",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-12.northcentralus.logic.azure.com:443/workflows/89333c3f0b294d6fae49284b3e55d4ea/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Mb55AWS1HNTgwVsHGEWVSY3j3NSDUKDd93yFZLRjRDk",
+							"body": {
+								"value": "{\n  \"pipeline_name\" : @pipeline().Pipeline,\n        \"status\" : @pipeline(),\n        \"run_id\" : @pipeline().RunId,\n        \"run time\" : @utcNow()}\n}\n",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
