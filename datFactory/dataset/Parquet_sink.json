@@ -1,0 +1,19 @@
+{
+	"name": "Parquet_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "raw_data_linked_service",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "raw-data"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
