@@ -54,7 +54,7 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
-									"wildcardFolderPath": "*",
+									"wildcardFolderPath": "input",
 									"wildcardFileName": "*",
 									"enablePartitionDiscovery": false
 								},
@@ -75,92 +75,6 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "account",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "account",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "sector",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "sector",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "year_established",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "year_established",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "revenue",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "revenue",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "employees",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "employees",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "office_location",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "office_location",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "subsidiary_of",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "subsidiary_of",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									}
-								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -225,8 +139,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "*",
-						"folderPath": "*",
+						"folderPath": "input",
 						"fileSystem": "raw-data"
 					},
 					"columnDelimiter": ",",
