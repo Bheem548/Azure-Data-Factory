@@ -1,0 +1,97 @@
+{
+	"name": "copy-files-to-parquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy csv to parquet",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFolderPath": "input",
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "raw_data_Dataset",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet_sink",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "WebActivity to send email",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy csv to parquet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-12.northcentralus.logic.azure.com:443/workflows/89333c3f0b294d6fae49284b3e55d4ea/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Mb55AWS1HNTgwVsHGEWVSY3j3NSDUKDd93yFZLRjRDk",
+					"body": {
+						"value": "{\n  \"pipeline_name\" : \"@{pipeline().Pipeline}\",\n        \"status\" :\"Success\",\n        \"run_id\" : \"@{pipeline().RunId}\",\n        \"run_time\" : \"@{utcNow()}\"}\n}\n",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-01-29T17:46:48Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
