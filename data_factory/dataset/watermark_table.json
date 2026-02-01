@@ -1,0 +1,39 @@
+{
+	"name": "watermark_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "TableName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastLoadedAt",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "LoadBatchID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "RecordCount",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Notes",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Customer_Watermark"
+		}
+	}
+}
