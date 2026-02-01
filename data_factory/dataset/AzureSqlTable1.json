@@ -62,7 +62,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
+			"schema": "mySchema",
 			"table": {
 				"value": "@dataset().tableName",
 				"type": "Expression"
